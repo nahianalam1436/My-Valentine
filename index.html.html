@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Valentine</title>
+    <style>
+        body {
+            background: url('bg.JPEG') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            z-index: 1;
+        }
+
+        #container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            position: relative;
+            max-width: 600px;
+            width: 90%;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #contentWrapper {
+            transition: opacity 0.8s ease;
+            opacity: 1;
+        }
+
+        h1 {
+            color: #d81b60; /* আগের সেই উজ্জ্বল কালার */
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem; /* সাইজ বাড়ানো হয়েছে */
+            font-weight: 800; /* ফন্ট বোল্ড করা হয়েছে */
+            line-height: 1.4;
+            /* টেক্সট শ্যাডো আরও শক্তিশালী করা হয়েছে রিডিবিলিটির জন্য */
+            text-shadow: 2px 2px 10px rgba(255,255,255,1), -1px -1px 0px rgba(255,255,255,1);
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+
+        button {
+            padding: 14px 20px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, top 0.2s, left 0.2s;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        #yesBtn { background-color: #4caf50; color: white; }
+        
+        #noBtn { 
+            background-color: #e91e63; 
+            color: white; 
+            z-index: 9999;
+            position: relative;
+        }
+        
+        #resetBtn {
+            margin-top: 20px;
+            background-color: #d81b60;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .hidden { display: none !important; }
+
+        #angryCat img {
+            max-width: 250px;
+            height: auto;
+            border-radius: 15px;
+            border: 4px solid #d81b60;
+            display: block;
+            margin: 15px auto;
+        }
+
+        .floating-text {
+            position: fixed;
+            color: #b71c1c;
+            font-weight: 900; /* অতিরিক্ত বোল্ড */
+            font-size: 1.2rem;
+            white-space: nowrap;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 14px;
+            border-radius: 12px;
+            pointer-events: none;
+            z-index: 10;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body onclick="playMusic1()">
+
+    <audio id="audio1" loop><source src="music.mp3" type="audio/mpeg"></audio>
+    <audio id="audio2" loop><source src="angry_music.mp3" type="audio/mpeg"></audio>
+
+    <div id="container">
+        <div id="contentWrapper">
+            <div id="questionArea">
+                <h1>Will You Be My Valentine jaaaaaan? 🥺🌹</h1>
+                <div class="buttons">
+                    <button id="yesBtn" onclick="sayYes()">Yessss, I was, is and will always be your forever valentine my love 💛</button>
+                    <button id="noBtn" onmouseover="moveNo()" onclick="moveNo()">You are none of mine 👺</button>
+                </div>
+            </div>
+
+            <div id="angryCat" class="hidden">
+                <h1 style="color: #d81b60; font-size: 1.6rem; font-weight: 800;">Stop messing with me bloody girl! 😾</h1>
+                <img src="cat.gif" alt="Angry Cat">
+                <button id="resetBtn" onclick="resetPage()">এখন আবার ঠিক করে উত্তর দাও</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="floatingTexts" class="hidden">
+        <div class="floating-text" style="top: 5%; left: 30%; transform: rotate(5deg);">কুত্তার বাচ্চা তুই আমাকেই ভালোবাসবি</div>
+        <div class="floating-text" style="top: 12%; left: 5%; transform: rotate(-10deg);">মাইর খাবা কিন্তু প্রম</div>
+        <div class="floating-text" style="top: 8%; right: 5%; transform: rotate(12deg);">ছি তুমি আমাকে ভালোবাসো না?</div>
+        <div class="floating-text" style="bottom: 18%; left: 4%; transform: rotate(-5deg);">কুকুরের বাচ্চা তুমি?</div>
+        <div class="floating-text" style="top: 50%; right: 3%; transform: rotate(-10deg);">আসো একটা চুমু দেই</div>
+        <div class="floating-text" style="bottom: 8%; right: 8%; transform: rotate(6deg);">তোমাকে শক্ত করে জড়িয়ে ধরবোওওওওও</div>
+        <div class="floating-text" style="top: 35%; left: 3%; transform: rotate(7deg);">তোমার এত্তো বড় সাহস হয় কিভাবে?</div>
+        <div class="floating-text" style="bottom: 12%; right: 30%; transform: rotate(-3deg);">তুমি অন্য কাউকে ভালোবাসো?</div>
+        <div class="floating-text" style="bottom: 5%; left: 20%; color: #880e4f; font-size: 1.4rem;">I wanna grab your boooooobies</div>
+    </div>
+
+    <script>
+        let noCount = 0;
+        let musicStarted = false;
+        const a1 = document.getElementById("audio1");
+        const a2 = document.getElementById("audio2");
+
+        function playMusic1() {
+            if (!musicStarted) {
+                a1.play().catch(e => console.log("Audio play error"));
+                musicStarted = true;
+            }
+        }
+
+        function moveNo() {
+            playMusic1();
+            noCount++;
+            
+            const noBtn = document.getElementById('noBtn');
+            noBtn.style.position = 'fixed'; 
+
+            if (noCount >= 4) {
+                const wrapper = document.getElementById('contentWrapper');
+                wrapper.style.opacity = '0';
+                setTimeout(() => {
+                    a1.pause();
+                    a2.currentTime = 0;
+                    a2.play();
+                    document.getElementById('questionArea').classList.add('hidden');
+                    document.getElementById('angryCat').classList.remove('hidden');
+                    document.getElementById('floatingTexts').classList.remove('hidden');
+                    wrapper.style.opacity = '1';
+                }, 800);
+                return;
+            }
+
+            const padding = 50;
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+            
+            const maxX = window.innerWidth - btnWidth - padding;
+            const maxY = window.innerHeight - btnHeight - padding;
+
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        function sayYes() {
+            playMusic1();
+            const wrapper = document.getElementById('contentWrapper');
+            wrapper.style.opacity = '0';
+            setTimeout(() => {
+                wrapper.innerHTML = `
+                    <h1 style="font-size: 1.6rem; color: #d81b60; font-weight: 800; margin: 0; padding: 10px; text-shadow: 2px 2px 8px rgba(255,255,255,1);">
+                        I also love you my valentine Prom ❤️<br><br>
+                        Though we are passing a very difficult phase of our relationship, 
+                        I always crave for your presence. Can't we fix? Maybe not huh!<br><br>
+                        Anyway will you be free at February 14?
+                    </h1>
+                `;
+                wrapper.style.opacity = '1';
+            }, 800);
+        }
+
+        function resetPage() {
+            const wrapper = document.getElementById('contentWrapper');
+            wrapper.style.opacity = '0';
+            setTimeout(() => {
+                a2.pause();
+                a1.play();
+                noCount = 0;
+                const noBtn = document.getElementById('noBtn');
+                noBtn.style.position = 'relative'; 
+                noBtn.style.left = 'auto';
+                noBtn.style.top = 'auto';
+                
+                document.getElementById('angryCat').classList.add('hidden');
+                document.getElementById('floatingTexts').classList.add('hidden');
+                document.getElementById('questionArea').classList.remove('hidden');
+                wrapper.style.opacity = '1';
+            }, 800);
+        }
+    </script>
+</body>
+</html>
